@@ -38,3 +38,19 @@ from arrays.best_time_to_buy_sell_stock import max_profit
 )
 def test_max_profit(prices, expected):
     assert max_profit(prices) == expected
+
+
+from arrays.maximum_subarray import max_subarray
+
+
+@pytest.mark.parametrize(
+    "nums,expected",
+    [([-2, 1, -3, 4, -1, 2, 1, -5, 4], 6), ([1], 1), ([5, 4, -1, 7, 8], 23), ([-3, -1, -2], -1), ([0, 0], 0)],
+)
+def test_max_subarray(nums, expected):
+    assert max_subarray(nums) == expected
+
+
+def test_max_subarray_empty():
+    with pytest.raises(ValueError):
+        max_subarray([])
