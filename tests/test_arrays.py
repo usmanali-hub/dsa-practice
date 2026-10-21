@@ -83,3 +83,14 @@ from arrays.product_except_self import product_except_self
 )
 def test_product_except_self(nums, expected):
     assert product_except_self(nums) == expected
+
+
+from arrays.container_with_most_water import max_area
+
+
+@pytest.mark.parametrize(
+    "heights,expected",
+    [([1, 8, 6, 2, 5, 4, 8, 3, 7], 49), ([1, 1], 1), ([4, 3, 2, 1, 4], 16), ([1, 2, 1], 2), ([5], 0), ([], 0)],
+)
+def test_max_area(heights, expected):
+    assert max_area(heights) == expected
