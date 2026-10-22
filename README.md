@@ -3,6 +3,8 @@
 Daily data structures and algorithms practice in Python: one problem a day, with the approach,
 complexity and tests for every solution.
 
+![CI](https://github.com/usmanali-hub/dsa-practice/actions/workflows/ci.yml/badge.svg)
+
 ## Run tests
 
 ```bash
