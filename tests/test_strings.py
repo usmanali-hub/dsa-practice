@@ -6,9 +6,11 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from strings.group_anagrams import group_anagrams
+from strings.longest_common_prefix import longest_common_prefix
 from strings.longest_substring_no_repeat import length_of_longest_substring
 from strings.valid_anagram import is_anagram
 from strings.valid_palindrome import is_palindrome
+from strings.valid_parentheses import is_valid
 
 
 @pytest.mark.parametrize(
@@ -44,3 +46,19 @@ def test_group_anagrams_edge_cases():
     assert group_anagrams([]) == []
     assert group_anagrams([""]) == [[""]]
     assert group_anagrams(["a"]) == [["a"]]
+
+
+@pytest.mark.parametrize(
+    "words,expected",
+    [(["flower", "flow", "flight"], "fl"), (["dog", "racecar", "car"], ""), ([], ""), (["solo"], "solo"), (["", "a"], ""), (["ab", "ab"], "ab")],
+)
+def test_longest_common_prefix(words, expected):
+    assert longest_common_prefix(words) == expected
+
+
+@pytest.mark.parametrize(
+    "s,expected",
+    [("()", True), ("()[]{}", True), ("(]", False), ("([)]", False), ("{[]}", True), ("", True), ("(", False), (")", False)],
+)
+def test_is_valid(s, expected):
+    assert is_valid(s) is expected
