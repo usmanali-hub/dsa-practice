@@ -6,8 +6,10 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from strings.group_anagrams import group_anagrams
+from strings.is_subsequence import is_subsequence
 from strings.longest_common_prefix import longest_common_prefix
 from strings.longest_substring_no_repeat import length_of_longest_substring
+from strings.reverse_words import reverse_words
 from strings.valid_anagram import is_anagram
 from strings.valid_palindrome import is_palindrome
 from strings.valid_parentheses import is_valid
@@ -62,3 +64,19 @@ def test_longest_common_prefix(words, expected):
 )
 def test_is_valid(s, expected):
     assert is_valid(s) is expected
+
+
+@pytest.mark.parametrize(
+    "s,expected",
+    [("the sky is blue", "blue is sky the"), ("  hello   world  ", "world hello"), ("a", "a"), ("", ""), ("   ", "")],
+)
+def test_reverse_words(s, expected):
+    assert reverse_words(s) == expected
+
+
+@pytest.mark.parametrize(
+    "s,t,expected",
+    [("abc", "ahbgdc", True), ("axc", "ahbgdc", False), ("", "abc", True), ("a", "", False), ("", "", True), ("aa", "a", False)],
+)
+def test_is_subsequence(s, t, expected):
+    assert is_subsequence(s, t) is expected

@@ -30,3 +30,5 @@ pytest
 | 12 | Strings | [Group Anagrams](strings/group_anagrams.py) | Bucket by sorted-letters key | O(n·k log k) | O(n·k) |
 | 13 | Strings | [Longest Common Prefix](strings/longest_common_prefix.py) | Shorten the first word until all match | O(S) | O(1) |
 | 14 | Strings | [Valid Parentheses](strings/valid_parentheses.py) | Stack of open brackets | O(n) | O(n) |
+| 15 | Strings | [Reverse Words in a String](strings/reverse_words.py) | Split on whitespace, reverse, join | O(n) | O(n) |
+| 16 | Strings | [Is Subsequence](strings/is_subsequence.py) | Two pointers across the longer string | O(n) | O(1) |
