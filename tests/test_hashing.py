@@ -5,8 +5,10 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from hashing.isomorphic_strings import is_isomorphic
 from hashing.longest_consecutive_sequence import longest_consecutive
 from hashing.subarray_sum_equals_k import subarray_sum
+from hashing.top_k_frequent import top_k_frequent
 
 
 @pytest.mark.parametrize(
@@ -46,3 +48,34 @@ def test_subarray_sum_matches_brute_force_on_random_input():
 )
 def test_longest_consecutive(nums, expected):
     assert longest_consecutive(nums) == expected
+
+
+@pytest.mark.parametrize(
+    "nums,k,expected",
+    [([1, 1, 1, 2, 2, 3], 2, [1, 2]), ([1], 1, [1]), ([4, 4, 5, 5, 6], 2, [4, 5]), ([1, 2, 3], 3, [1, 2, 3]), ([1, 2], 0, []), ([], 3, [])],
+)
+def test_top_k_frequent(nums, k, expected):
+    assert top_k_frequent(nums, k) == expected
+
+
+def test_top_k_frequent_matches_counter_most_common_on_random_input():
+    import random
+    from collections import Counter
+
+    rng = random.Random(1)
+    for _ in range(100):
+        nums = [rng.randint(0, 6) for _ in range(rng.randint(1, 30))]
+        k = rng.randint(1, 4)
+        got = top_k_frequent(nums, k)
+        freqs = Counter(nums)
+        assert len(set(got)) == len(got) == min(k, len(freqs))
+        # every returned value is at least as frequent as every value left out
+        assert min(freqs[v] for v in got) >= max((freqs[v] for v in freqs if v not in got), default=0)
+
+
+@pytest.mark.parametrize(
+    "s,t,expected",
+    [("egg", "add", True), ("foo", "bar", False), ("paper", "title", True), ("ab", "aa", False), ("badc", "baba", False), ("", "", True), ("a", "ab", False)],
+)
+def test_is_isomorphic(s, t, expected):
+    assert is_isomorphic(s, t) is expected

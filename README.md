@@ -34,3 +34,5 @@ pytest
 | 16 | Strings | [Is Subsequence](strings/is_subsequence.py) | Two pointers across the longer string | O(n) | O(1) |
 | 17 | Hashing | [Subarray Sum Equals K](hashing/subarray_sum_equals_k.py) | Prefix sums with a count map | O(n) | O(n) |
 | 18 | Hashing | [Longest Consecutive Sequence](hashing/longest_consecutive_sequence.py) | Set, count only from run starts | O(n) | O(n) |
+| 19 | Hashing | [Top K Frequent Elements](hashing/top_k_frequent.py) | Count, then bucket by frequency | O(n) | O(n) |
+| 20 | Hashing | [Isomorphic Strings](hashing/isomorphic_strings.py) | Two maps, one per direction | O(n) | O(k) |
