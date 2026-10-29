@@ -38,3 +38,5 @@ pytest
 | 20 | Hashing | [Isomorphic Strings](hashing/isomorphic_strings.py) | Two maps, one per direction | O(n) | O(k) |
 | 21 | Hashing | [Contains Duplicate II](hashing/contains_duplicate_within_k.py) | Last-seen index per value | O(n) | O(n) |
 | 22 | Hashing | [4Sum II](hashing/four_sum_count.py) | Meet in the middle: count pair sums | O(n²) | O(n²) |
+| 23 | Hashing | [Intersection of Two Arrays II](hashing/intersect_two_arrays.py) | Count the shorter array, spend counts | O(n + m) | O(min(n, m)) |
+| 24 | Hashing | [Contiguous Array](hashing/contiguous_array.py) | Running balance, first index per balance | O(n) | O(n) |

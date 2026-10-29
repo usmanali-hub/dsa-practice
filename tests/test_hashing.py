@@ -6,7 +6,9 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from hashing.contains_duplicate_within_k import contains_nearby_duplicate
+from hashing.contiguous_array import find_max_length
 from hashing.four_sum_count import four_sum_count
+from hashing.intersect_two_arrays import intersect
 from hashing.isomorphic_strings import is_isomorphic
 from hashing.longest_consecutive_sequence import longest_consecutive
 from hashing.subarray_sum_equals_k import subarray_sum
@@ -117,3 +119,44 @@ def test_four_sum_count_matches_brute_force():
         lists = [[rng.randint(-3, 3) for _ in range(rng.randint(1, 5))] for _ in range(4)]
         brute = sum(1 for t in itertools.product(*lists) if sum(t) == 0)
         assert four_sum_count(*lists) == brute
+
+
+@pytest.mark.parametrize(
+    "a,b,expected",
+    [([1, 2, 2, 1], [2, 2], [2, 2]), ([4, 9, 5], [9, 4, 9, 8, 4], [9, 4]), ([], [1], []), ([1, 1], [1], [1]), ([1, 2], [3, 4], [])],
+)
+def test_intersect_examples(a, b, expected):
+    assert sorted(intersect(a, b)) == sorted(expected)
+
+
+def test_intersect_matches_counter_intersection_on_random_input():
+    import random
+    from collections import Counter
+
+    rng = random.Random(5)
+    for _ in range(200):
+        a = [rng.randint(0, 5) for _ in range(rng.randint(0, 12))]
+        b = [rng.randint(0, 5) for _ in range(rng.randint(0, 12))]
+        assert Counter(intersect(a, b)) == Counter(a) & Counter(b)
+        assert Counter(intersect(a, b)) == Counter(intersect(b, a))
+
+
+@pytest.mark.parametrize(
+    "nums,expected",
+    [([0, 1], 2), ([0, 1, 0], 2), ([0, 0, 1, 0, 0, 0, 1, 1], 6), ([], 0), ([1, 1, 1], 0), ([1, 0, 1, 0, 1, 0], 6)],
+)
+def test_find_max_length(nums, expected):
+    assert find_max_length(nums) == expected
+
+
+def test_find_max_length_matches_brute_force():
+    import random
+
+    rng = random.Random(6)
+    for _ in range(300):
+        nums = [rng.randint(0, 1) for _ in range(rng.randint(0, 16))]
+        brute = max(
+            (j - i for i in range(len(nums)) for j in range(i + 1, len(nums) + 1) if sum(nums[i:j]) * 2 == j - i),
+            default=0,
+        )
+        assert find_max_length(nums) == brute
