@@ -40,3 +40,5 @@ pytest
 | 22 | Hashing | [4Sum II](hashing/four_sum_count.py) | Meet in the middle: count pair sums | O(n²) | O(n²) |
 | 23 | Hashing | [Intersection of Two Arrays II](hashing/intersect_two_arrays.py) | Count the shorter array, spend counts | O(n + m) | O(min(n, m)) |
 | 24 | Hashing | [Contiguous Array](hashing/contiguous_array.py) | Running balance, first index per balance | O(n) | O(n) |
+| 25 | Two pointers | [Squares of a Sorted Array](two_pointers/sorted_squares.py) | Fill from the back, larger absolute end first | O(n) | O(n) |
+| 26 | Two pointers | [3Sum](two_pointers/three_sum.py) | Sort, fix one, sweep two pointers, skip duplicates | O(n²) | O(1) |
