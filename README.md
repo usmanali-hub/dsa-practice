@@ -42,3 +42,5 @@ pytest
 | 24 | Hashing | [Contiguous Array](hashing/contiguous_array.py) | Running balance, first index per balance | O(n) | O(n) |
 | 25 | Two pointers | [Squares of a Sorted Array](two_pointers/sorted_squares.py) | Fill from the back, larger absolute end first | O(n) | O(n) |
 | 26 | Two pointers | [3Sum](two_pointers/three_sum.py) | Sort, fix one, sweep two pointers, skip duplicates | O(n²) | O(1) |
+| 27 | Two pointers | [Two Sum II (sorted input)](two_pointers/two_sum_sorted.py) | Pointers from both ends, move the side that fixes the sum | O(n) | O(1) |
+| 28 | Two pointers | [3Sum Closest](two_pointers/three_sum_closest.py) | Sort, fix one, sweep two pointers, track the best sum | O(n²) | O(1) |
