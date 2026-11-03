@@ -7,7 +7,9 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from two_pointers.container_with_most_water import max_area
 from two_pointers.remove_duplicates_sorted import remove_duplicates
+from two_pointers.sort_colors import sort_colors
 from two_pointers.sorted_squares import sorted_squares
 from two_pointers.three_sum import three_sum
 from two_pointers.three_sum_closest import three_sum_closest
@@ -152,3 +154,46 @@ def test_trap_matches_brute_force():
 def test_trap_rejects_negative_heights():
     with pytest.raises(ValueError):
         trap([1, -1, 2])
+
+
+@pytest.mark.parametrize(
+    "height,expected",
+    [([1, 8, 6, 2, 5, 4, 8, 3, 7], 49), ([1, 1], 1), ([], 0), ([5], 0), ([0, 0, 0], 0), ([4, 3, 2, 1, 4], 16), ([1, 2, 1], 2)],
+)
+def test_max_area_examples(height, expected):
+    assert max_area(height) == expected
+
+
+def test_max_area_matches_brute_force():
+    rng = random.Random(13)
+    for _ in range(400):
+        height = [rng.randint(0, 12) for _ in range(rng.randint(0, 14))]
+        brute = max((min(height[i], height[j]) * (j - i) for i, j in itertools.combinations(range(len(height)), 2)), default=0)
+        assert max_area(height) == brute
+
+
+def test_max_area_rejects_negative_heights():
+    with pytest.raises(ValueError):
+        max_area([3, -1, 2])
+
+
+@pytest.mark.parametrize("nums", [[], [0], [2], [2, 0, 2, 1, 1, 0], [1, 1, 1], [2, 2, 0, 0], [0, 1, 2], [2, 1, 0]])
+def test_sort_colors_examples(nums):
+    expected = sorted(nums)
+    sort_colors(nums)
+    assert nums == expected
+
+
+def test_sort_colors_matches_sorted_on_random_input_and_works_in_place():
+    rng = random.Random(14)
+    for _ in range(400):
+        nums = [rng.randint(0, 2) for _ in range(rng.randint(0, 20))]
+        same_list = nums
+        expected = sorted(nums)
+        assert sort_colors(nums) is None
+        assert same_list is nums and nums == expected
+
+
+def test_sort_colors_rejects_other_values():
+    with pytest.raises(ValueError):
+        sort_colors([0, 3, 1])
