@@ -7,9 +7,11 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from two_pointers.remove_duplicates_sorted import remove_duplicates
 from two_pointers.sorted_squares import sorted_squares
 from two_pointers.three_sum import three_sum
 from two_pointers.three_sum_closest import three_sum_closest
+from two_pointers.trapping_rain_water import trap
 from two_pointers.two_sum_sorted import two_sum_sorted
 
 
@@ -109,3 +111,44 @@ def test_three_sum_closest_matches_brute_force():
 def test_three_sum_closest_needs_three_numbers():
     with pytest.raises(ValueError):
         three_sum_closest([1, 2], 3)
+
+
+@pytest.mark.parametrize("nums,k", [([], 0), ([1], 1), ([1, 1, 2], 2), ([0, 0, 1, 1, 1, 2, 2, 3, 3, 4], 5), ([2, 2, 2], 1)])
+def test_remove_duplicates_examples(nums, k):
+    original = list(nums)
+    assert remove_duplicates(nums) == k
+    assert nums[:k] == sorted(set(original))
+
+
+def test_remove_duplicates_matches_set_on_random_input():
+    rng = random.Random(11)
+    for _ in range(300):
+        nums = sorted(rng.randint(-5, 5) for _ in range(rng.randint(0, 20)))
+        expected = sorted(set(nums))
+        k = remove_duplicates(nums)
+        assert k == len(expected)
+        assert nums[:k] == expected
+
+
+@pytest.mark.parametrize(
+    "height,expected",
+    [([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], 6), ([4, 2, 0, 3, 2, 5], 9), ([], 0), ([3], 0), ([1, 2, 3], 0), ([3, 0, 3], 3)],
+)
+def test_trap_examples(height, expected):
+    assert trap(height) == expected
+
+
+def _trap_brute_force(height):
+    return sum(max(0, min(max(height[: i + 1]), max(height[i:])) - h) for i, h in enumerate(height))
+
+
+def test_trap_matches_brute_force():
+    rng = random.Random(12)
+    for _ in range(400):
+        height = [rng.randint(0, 8) for _ in range(rng.randint(0, 15))]
+        assert trap(height) == _trap_brute_force(height)
+
+
+def test_trap_rejects_negative_heights():
+    with pytest.raises(ValueError):
+        trap([1, -1, 2])

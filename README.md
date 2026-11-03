@@ -44,3 +44,5 @@ pytest
 | 26 | Two pointers | [3Sum](two_pointers/three_sum.py) | Sort, fix one, sweep two pointers, skip duplicates | O(n²) | O(1) |
 | 27 | Two pointers | [Two Sum II (sorted input)](two_pointers/two_sum_sorted.py) | Pointers from both ends, move the side that fixes the sum | O(n) | O(1) |
 | 28 | Two pointers | [3Sum Closest](two_pointers/three_sum_closest.py) | Sort, fix one, sweep two pointers, track the best sum | O(n²) | O(1) |
+| 29 | Two pointers | [Remove Duplicates from Sorted Array](two_pointers/remove_duplicates_sorted.py) | Slow write pointer, fast read pointer, copy on change | O(n) | O(1) |
+| 30 | Two pointers | [Trapping Rain Water](two_pointers/trapping_rain_water.py) | Move the lower wall inward; its water level is already decided | O(n) | O(1) |
