@@ -48,3 +48,5 @@ pytest
 | 30 | Two pointers | [Trapping Rain Water](two_pointers/trapping_rain_water.py) | Move the lower wall inward; its water level is already decided | O(n) | O(1) |
 | 31 | Two pointers | [Container With Most Water](two_pointers/container_with_most_water.py) | Start widest, move the shorter wall inward | O(n) | O(1) |
 | 32 | Two pointers | [Sort Colors](two_pointers/sort_colors.py) | Three regions with low, mid and high pointers (Dutch flag) | O(n) | O(1) |
+| 33 | Sliding window | [Maximum Average Subarray I](sliding_window/max_average_subarray.py) | Fixed window: add the entering element, drop the leaving one | O(n) | O(1) |
+| 34 | Sliding window | [Minimum Size Subarray Sum](sliding_window/min_size_subarray_sum.py) | Grow right until the sum reaches target, shrink left while it still does | O(n) | O(1) |
