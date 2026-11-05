@@ -6,6 +6,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from sliding_window.best_time_to_buy_sell_stock import max_profit
+from sliding_window.longest_substring_no_repeat import length_of_longest_substring
 from sliding_window.max_average_subarray import find_max_average
 from sliding_window.min_size_subarray_sum import min_subarray_len
 
@@ -54,3 +56,37 @@ def test_min_subarray_len_matches_brute_force():
 def test_min_subarray_len_rejects_non_positive_numbers(nums):
     with pytest.raises(ValueError):
         min_subarray_len(5, nums)
+
+
+@pytest.mark.parametrize(
+    "prices,expected",
+    [([7, 1, 5, 3, 6, 4], 5), ([7, 6, 4, 3, 1], 0), ([], 0), ([5], 0), ([2, 2, 2], 0), ([3, 2, 6, 5, 0, 3], 4), ([1, 2], 1)],
+)
+def test_max_profit_examples(prices, expected):
+    assert max_profit(prices) == expected
+
+
+def test_max_profit_matches_brute_force():
+    rng = random.Random(35)
+    for _ in range(500):
+        prices = [rng.randint(0, 30) for _ in range(rng.randint(0, 12))]
+        brute = max([0] + [prices[j] - prices[i] for i in range(len(prices)) for j in range(i + 1, len(prices))])
+        assert max_profit(prices) == brute
+
+
+@pytest.mark.parametrize(
+    "s,expected",
+    [("abcabcbb", 3), ("bbbbb", 1), ("pwwkew", 3), ("", 0), ("a", 1), ("abba", 2), ("tmmzuxt", 5), ("dvdf", 3), ("a b a", 3)],
+)
+def test_longest_substring_examples(s, expected):
+    assert length_of_longest_substring(s) == expected
+
+
+def test_longest_substring_matches_brute_force():
+    rng = random.Random(36)
+    for _ in range(500):
+        s = "".join(rng.choice("abcd") for _ in range(rng.randint(0, 14)))
+        brute = max(
+            [0] + [j - i for i in range(len(s)) for j in range(i + 1, len(s) + 1) if len(set(s[i:j])) == j - i]
+        )
+        assert length_of_longest_substring(s) == brute

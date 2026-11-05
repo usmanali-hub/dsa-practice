@@ -50,3 +50,5 @@ pytest
 | 32 | Two pointers | [Sort Colors](two_pointers/sort_colors.py) | Three regions with low, mid and high pointers (Dutch flag) | O(n) | O(1) |
 | 33 | Sliding window | [Maximum Average Subarray I](sliding_window/max_average_subarray.py) | Fixed window: add the entering element, drop the leaving one | O(n) | O(1) |
 | 34 | Sliding window | [Minimum Size Subarray Sum](sliding_window/min_size_subarray_sum.py) | Grow right until the sum reaches target, shrink left while it still does | O(n) | O(1) |
+| 35 | Sliding window | [Best Time to Buy and Sell Stock](sliding_window/best_time_to_buy_sell_stock.py) | One pass tracking the lowest price so far; best sale is today minus that low | O(n) | O(1) |
+| 36 | Sliding window | [Longest Substring Without Repeating Characters](sliding_window/longest_substring_no_repeat.py) | Variable window; on a repeat inside it, jump left past the earlier index | O(n) | O(k) |
