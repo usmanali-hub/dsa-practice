@@ -9,7 +9,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from sliding_window.best_time_to_buy_sell_stock import max_profit
 from sliding_window.longest_substring_no_repeat import length_of_longest_substring
 from sliding_window.max_average_subarray import find_max_average
+from sliding_window.max_consecutive_ones import longest_ones
 from sliding_window.min_size_subarray_sum import min_subarray_len
+from sliding_window.minimum_window_substring import min_window
 
 
 @pytest.mark.parametrize(
@@ -90,3 +92,50 @@ def test_longest_substring_matches_brute_force():
             [0] + [j - i for i in range(len(s)) for j in range(i + 1, len(s) + 1) if len(set(s[i:j])) == j - i]
         )
         assert length_of_longest_substring(s) == brute
+
+
+@pytest.mark.parametrize(
+    "nums,k,expected",
+    [([1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], 2, 6), ([0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1], 3, 10), ([], 2, 0), ([0, 0, 0], 0, 0), ([0, 0, 0], 5, 3), ([1, 1], 0, 2)],
+)
+def test_longest_ones_examples(nums, k, expected):
+    assert longest_ones(nums, k) == expected
+
+
+def test_longest_ones_rejects_negative_k():
+    with pytest.raises(ValueError):
+        longest_ones([1, 0], -1)
+
+
+def test_longest_ones_matches_brute_force():
+    rng = random.Random(37)
+    for _ in range(500):
+        nums = [rng.randint(0, 1) for _ in range(rng.randint(0, 14))]
+        k = rng.randint(0, 4)
+        brute = max(
+            [0] + [j - i for i in range(len(nums)) for j in range(i + 1, len(nums) + 1) if nums[i:j].count(0) <= k]
+        )
+        assert longest_ones(nums, k) == brute
+
+
+@pytest.mark.parametrize(
+    "s,t,expected",
+    [("ADOBECODEBANC", "ABC", "BANC"), ("a", "a", "a"), ("a", "aa", ""), ("", "a", ""), ("abc", "", ""), ("aab", "ab", "ab"), ("ab", "b", "b"), ("aa", "aa", "aa")],
+)
+def test_min_window_examples(s, t, expected):
+    assert min_window(s, t) == expected
+
+
+def test_min_window_matches_brute_force():
+    rng = random.Random(38)
+    for _ in range(500):
+        s = "".join(rng.choice("abc") for _ in range(rng.randint(0, 12)))
+        t = "".join(rng.choice("abc") for _ in range(rng.randint(1, 4)))
+        need = {c: t.count(c) for c in set(t)}
+        best = ""
+        for i in range(len(s)):
+            for j in range(i + 1, len(s) + 1):
+                w = s[i:j]
+                if all(w.count(c) >= n for c, n in need.items()) and (best == "" or len(w) < len(best)):
+                    best = w
+        assert min_window(s, t) == best

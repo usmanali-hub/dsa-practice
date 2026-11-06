@@ -52,3 +52,5 @@ pytest
 | 34 | Sliding window | [Minimum Size Subarray Sum](sliding_window/min_size_subarray_sum.py) | Grow right until the sum reaches target, shrink left while it still does | O(n) | O(1) |
 | 35 | Sliding window | [Best Time to Buy and Sell Stock](sliding_window/best_time_to_buy_sell_stock.py) | One pass tracking the lowest price so far; best sale is today minus that low | O(n) | O(1) |
 | 36 | Sliding window | [Longest Substring Without Repeating Characters](sliding_window/longest_substring_no_repeat.py) | Variable window; on a repeat inside it, jump left past the earlier index | O(n) | O(k) |
+| 37 | Sliding window | [Max Consecutive Ones III](sliding_window/max_consecutive_ones.py) | Window holding at most k zeros; shrink from the left when it holds more | O(n) | O(1) |
+| 38 | Sliding window | [Minimum Window Substring](sliding_window/minimum_window_substring.py) | Grow until all needed characters are covered, then shrink while still covered | O(n) | O(k) |
