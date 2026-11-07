@@ -7,6 +7,8 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from sliding_window.best_time_to_buy_sell_stock import max_profit
+from sliding_window.contains_duplicate_ii import contains_nearby_duplicate
+from sliding_window.longest_repeating_replacement import character_replacement
 from sliding_window.longest_substring_no_repeat import length_of_longest_substring
 from sliding_window.max_average_subarray import find_max_average
 from sliding_window.max_consecutive_ones import longest_ones
@@ -139,3 +141,55 @@ def test_min_window_matches_brute_force():
                 if all(w.count(c) >= n for c, n in need.items()) and (best == "" or len(w) < len(best)):
                     best = w
         assert min_window(s, t) == best
+
+
+@pytest.mark.parametrize(
+    "nums,k,expected",
+    [([1, 2, 3, 1], 3, True), ([1, 0, 1, 1], 1, True), ([1, 2, 3, 1, 2, 3], 2, False), ([], 3, False), ([5, 5], 0, False), ([7], 1, False), ([1, 2, 1], 1, False)],
+)
+def test_contains_nearby_duplicate_examples(nums, k, expected):
+    assert contains_nearby_duplicate(nums, k) is expected
+
+
+def test_contains_nearby_duplicate_rejects_negative_k():
+    with pytest.raises(ValueError):
+        contains_nearby_duplicate([1], -1)
+
+
+def test_contains_nearby_duplicate_matches_brute_force():
+    rng = random.Random(39)
+    for _ in range(600):
+        nums = [rng.randint(0, 6) for _ in range(rng.randint(0, 12))]
+        k = rng.randint(0, 5)
+        brute = any(nums[i] == nums[j] for i in range(len(nums)) for j in range(i + 1, min(len(nums), i + k + 1)))
+        assert contains_nearby_duplicate(nums, k) is brute
+
+
+@pytest.mark.parametrize(
+    "s,k,expected",
+    [("ABAB", 2, 4), ("AABABBA", 1, 4), ("", 3, 0), ("A", 0, 1), ("ABC", 0, 1), ("ABC", 3, 3), ("AAAA", 0, 4), ("ABBB", 2, 4)],
+)
+def test_character_replacement_examples(s, k, expected):
+    assert character_replacement(s, k) == expected
+
+
+def test_character_replacement_rejects_negative_k():
+    with pytest.raises(ValueError):
+        character_replacement("A", -1)
+
+
+def test_character_replacement_matches_brute_force():
+    rng = random.Random(40)
+    for _ in range(500):
+        s = "".join(rng.choice("ABC") for _ in range(rng.randint(0, 12)))
+        k = rng.randint(0, 4)
+        brute = max(
+            [0]
+            + [
+                j - i
+                for i in range(len(s))
+                for j in range(i + 1, len(s) + 1)
+                if (j - i) - max(s[i:j].count(c) for c in set(s[i:j])) <= k
+            ]
+        )
+        assert character_replacement(s, k) == brute

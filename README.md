@@ -54,3 +54,5 @@ pytest
 | 36 | Sliding window | [Longest Substring Without Repeating Characters](sliding_window/longest_substring_no_repeat.py) | Variable window; on a repeat inside it, jump left past the earlier index | O(n) | O(k) |
 | 37 | Sliding window | [Max Consecutive Ones III](sliding_window/max_consecutive_ones.py) | Window holding at most k zeros; shrink from the left when it holds more | O(n) | O(1) |
 | 38 | Sliding window | [Minimum Window Substring](sliding_window/minimum_window_substring.py) | Grow until all needed characters are covered, then shrink while still covered | O(n) | O(k) |
+| 39 | Sliding window | [Contains Duplicate II](sliding_window/contains_duplicate_ii.py) | Fixed window of the last k values in a set; drop the oldest as it slides | O(n) | O(k) |
+| 40 | Sliding window | [Longest Repeating Character Replacement](sliding_window/longest_repeating_replacement.py) | Window valid while length minus its most frequent letter count is at most k | O(n) | O(1) |
