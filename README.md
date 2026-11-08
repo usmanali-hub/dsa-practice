@@ -56,3 +56,5 @@ pytest
 | 38 | Sliding window | [Minimum Window Substring](sliding_window/minimum_window_substring.py) | Grow until all needed characters are covered, then shrink while still covered | O(n) | O(k) |
 | 39 | Sliding window | [Contains Duplicate II](sliding_window/contains_duplicate_ii.py) | Fixed window of the last k values in a set; drop the oldest as it slides | O(n) | O(k) |
 | 40 | Sliding window | [Longest Repeating Character Replacement](sliding_window/longest_repeating_replacement.py) | Window valid while length minus its most frequent letter count is at most k | O(n) | O(1) |
+| 41 | Stack / queue | [Valid Parentheses](stack_queue/valid_parentheses.py) | Stack of openers; each closer must match the top | O(n) | O(n) |
+| 42 | Stack / queue | [Daily Temperatures](stack_queue/daily_temperatures.py) | Monotonic stack of days still waiting for a warmer one | O(n) | O(n) |
