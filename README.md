@@ -58,3 +58,5 @@ pytest
 | 40 | Sliding window | [Longest Repeating Character Replacement](sliding_window/longest_repeating_replacement.py) | Window valid while length minus its most frequent letter count is at most k | O(n) | O(1) |
 | 41 | Stack / queue | [Valid Parentheses](stack_queue/valid_parentheses.py) | Stack of openers; each closer must match the top | O(n) | O(n) |
 | 42 | Stack / queue | [Daily Temperatures](stack_queue/daily_temperatures.py) | Monotonic stack of days still waiting for a warmer one | O(n) | O(n) |
+| 43 | Stack / queue | [Queue using Stacks](stack_queue/queue_using_stacks.py) | Inbox and outbox stacks; refill the outbox only when it is empty | O(1) amortised | O(n) |
+| 44 | Stack / queue | [Evaluate Reverse Polish Notation](stack_queue/eval_rpn.py) | Operand stack; an operator pops right then left and pushes the result | O(n) | O(n) |
