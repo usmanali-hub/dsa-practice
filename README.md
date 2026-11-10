@@ -60,3 +60,5 @@ pytest
 | 42 | Stack / queue | [Daily Temperatures](stack_queue/daily_temperatures.py) | Monotonic stack of days still waiting for a warmer one | O(n) | O(n) |
 | 43 | Stack / queue | [Queue using Stacks](stack_queue/queue_using_stacks.py) | Inbox and outbox stacks; refill the outbox only when it is empty | O(1) amortised | O(n) |
 | 44 | Stack / queue | [Evaluate Reverse Polish Notation](stack_queue/eval_rpn.py) | Operand stack; an operator pops right then left and pushes the result | O(n) | O(n) |
+| 45 | Stack / queue | [Min Stack](stack_queue/min_stack.py) | Parallel stack of running minima, one entry per push | O(1) | O(n) |
+| 46 | Stack / queue | [Largest Rectangle in Histogram](stack_queue/largest_rectangle_histogram.py) | Increasing-height stack; popping a bar fixes the widest rectangle it can anchor | O(n) | O(n) |

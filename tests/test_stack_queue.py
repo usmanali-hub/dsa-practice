@@ -8,6 +8,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from stack_queue.daily_temperatures import daily_temperatures
 from stack_queue.eval_rpn import eval_rpn
+from stack_queue.largest_rectangle_histogram import largest_rectangle
+from stack_queue.min_stack import MinStack
 from stack_queue.queue_using_stacks import QueueUsingStacks
 from stack_queue.valid_parentheses import is_valid
 
@@ -96,3 +98,38 @@ def test_eval_rpn_matches_python_eval_on_random_expressions():
     for _ in range(300):
         toks, expr = build(4)
         assert eval_rpn(toks) == eval(expr)
+
+
+def test_min_stack_tracks_the_minimum_of_what_remains():
+    rng = random.Random(45)
+    for _ in range(200):
+        st, ref = MinStack(), []
+        for _ in range(60):
+            if ref and rng.random() < 0.4:
+                assert st.pop() == ref.pop()
+            else:
+                x = rng.randint(-20, 20)
+                st.push(x)
+                ref.append(x)
+            if ref:
+                assert st.top() == ref[-1] and st.get_min() == min(ref)
+
+
+def test_min_stack_empty_errors():
+    st = MinStack()
+    for call in (st.pop, st.top, st.get_min):
+        with pytest.raises(IndexError):
+            call()
+
+
+@pytest.mark.parametrize("heights,expected", [([2, 1, 5, 6, 2, 3], 10), ([2, 4], 4), ([], 0), ([5], 5), ([3, 3, 3], 9), ([6, 5, 4, 3], 12), ([0, 0], 0)])
+def test_largest_rectangle_examples(heights, expected):
+    assert largest_rectangle(heights) == expected
+
+
+def test_largest_rectangle_matches_brute_force():
+    rng = random.Random(46)
+    for _ in range(500):
+        h = [rng.randint(0, 9) for _ in range(rng.randint(0, 12))]
+        brute = max((min(h[i : j + 1]) * (j - i + 1) for i in range(len(h)) for j in range(i, len(h))), default=0)
+        assert largest_rectangle(h) == brute
