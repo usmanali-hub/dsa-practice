@@ -10,7 +10,9 @@ from stack_queue.daily_temperatures import daily_temperatures
 from stack_queue.eval_rpn import eval_rpn
 from stack_queue.largest_rectangle_histogram import largest_rectangle
 from stack_queue.min_stack import MinStack
+from stack_queue.next_greater_element_ii import next_greater_circular
 from stack_queue.queue_using_stacks import QueueUsingStacks
+from stack_queue.stack_using_queues import StackUsingQueues
 from stack_queue.valid_parentheses import is_valid
 
 
@@ -133,3 +135,42 @@ def test_largest_rectangle_matches_brute_force():
         h = [rng.randint(0, 9) for _ in range(rng.randint(0, 12))]
         brute = max((min(h[i : j + 1]) * (j - i + 1) for i in range(len(h)) for j in range(i, len(h))), default=0)
         assert largest_rectangle(h) == brute
+
+
+def test_stack_using_queues_matches_a_list_on_random_operations():
+    rng = random.Random(47)
+    for _ in range(200):
+        st, ref = StackUsingQueues(), []
+        for _ in range(60):
+            op = rng.choice(["push", "push", "pop", "top"])
+            if op == "push":
+                x = rng.randint(0, 99)
+                st.push(x)
+                ref.append(x)
+            elif ref:
+                assert (st.pop() if op == "pop" else st.top()) == (ref.pop() if op == "pop" else ref[-1])
+            assert st.empty() is (not ref)
+
+
+def test_stack_using_queues_empty_errors():
+    st = StackUsingQueues()
+    with pytest.raises(IndexError):
+        st.pop()
+    with pytest.raises(IndexError):
+        st.top()
+
+
+@pytest.mark.parametrize("nums,expected", [([1, 2, 1], [2, -1, 2]), ([1, 2, 3, 4, 3], [2, 3, 4, -1, 4]), ([], []), ([5], [-1]), ([3, 3, 3], [-1, -1, -1]), ([5, 4, 3, 2, 1], [-1, 5, 5, 5, 5])])
+def test_next_greater_circular_examples(nums, expected):
+    assert next_greater_circular(nums) == expected
+
+
+def test_next_greater_circular_matches_brute_force():
+    rng = random.Random(48)
+    for _ in range(500):
+        nums = [rng.randint(0, 6) for _ in range(rng.randint(0, 10))]
+        n = len(nums)
+        brute = []
+        for i in range(n):
+            brute.append(next((nums[(i + k) % n] for k in range(1, n) if nums[(i + k) % n] > nums[i]), -1))
+        assert next_greater_circular(nums) == brute

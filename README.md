@@ -62,3 +62,5 @@ pytest
 | 44 | Stack / queue | [Evaluate Reverse Polish Notation](stack_queue/eval_rpn.py) | Operand stack; an operator pops right then left and pushes the result | O(n) | O(n) |
 | 45 | Stack / queue | [Min Stack](stack_queue/min_stack.py) | Parallel stack of running minima, one entry per push | O(1) | O(n) |
 | 46 | Stack / queue | [Largest Rectangle in Histogram](stack_queue/largest_rectangle_histogram.py) | Increasing-height stack; popping a bar fixes the widest rectangle it can anchor | O(n) | O(n) |
+| 47 | Stack / queue | [Stack using Queues](stack_queue/stack_using_queues.py) | One queue; after each push rotate older items behind the new one | O(n) push, O(1) pop | O(n) |
+| 48 | Stack / queue | [Next Greater Element II](stack_queue/next_greater_element_ii.py) | Monotonic stack over the array scanned twice to handle the wrap-around | O(n) | O(n) |
