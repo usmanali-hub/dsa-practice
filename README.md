@@ -64,3 +64,5 @@ pytest
 | 46 | Stack / queue | [Largest Rectangle in Histogram](stack_queue/largest_rectangle_histogram.py) | Increasing-height stack; popping a bar fixes the widest rectangle it can anchor | O(n) | O(n) |
 | 47 | Stack / queue | [Stack using Queues](stack_queue/stack_using_queues.py) | One queue; after each push rotate older items behind the new one | O(n) push, O(1) pop | O(n) |
 | 48 | Stack / queue | [Next Greater Element II](stack_queue/next_greater_element_ii.py) | Monotonic stack over the array scanned twice to handle the wrap-around | O(n) | O(n) |
+| 49 | Linked list | [Reverse Linked List](linked_list/reverse_list.py) | Re-point each node at its predecessor while saving the next node first | O(n) | O(1) |
+| 50 | Linked list | [Remove Nth Node From End](linked_list/remove_nth_from_end.py) | Two pointers n apart with a dummy head; the gap locates the node before the target | O(n) | O(1) |
