@@ -66,3 +66,5 @@ pytest
 | 48 | Stack / queue | [Next Greater Element II](stack_queue/next_greater_element_ii.py) | Monotonic stack over the array scanned twice to handle the wrap-around | O(n) | O(n) |
 | 49 | Linked list | [Reverse Linked List](linked_list/reverse_list.py) | Re-point each node at its predecessor while saving the next node first | O(n) | O(1) |
 | 50 | Linked list | [Remove Nth Node From End](linked_list/remove_nth_from_end.py) | Two pointers n apart with a dummy head; the gap locates the node before the target | O(n) | O(1) |
+| 51 | Linked list | [Merge Two Sorted Lists](linked_list/merge_two_sorted_lists.py) | Dummy head and tail pointer; attach the smaller front node, then the leftover list | O(m + n) | O(1) |
+| 52 | Linked list | [Linked List Cycle II](linked_list/linked_list_cycle_ii.py) | Floyd's tortoise and hare, then restart one pointer from the head to reach the entrance | O(n) | O(1) |
