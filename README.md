@@ -68,3 +68,5 @@ pytest
 | 50 | Linked list | [Remove Nth Node From End](linked_list/remove_nth_from_end.py) | Two pointers n apart with a dummy head; the gap locates the node before the target | O(n) | O(1) |
 | 51 | Linked list | [Merge Two Sorted Lists](linked_list/merge_two_sorted_lists.py) | Dummy head and tail pointer; attach the smaller front node, then the leftover list | O(m + n) | O(1) |
 | 52 | Linked list | [Linked List Cycle II](linked_list/linked_list_cycle_ii.py) | Floyd's tortoise and hare, then restart one pointer from the head to reach the entrance | O(n) | O(1) |
+| 53 | Linked list | [Palindrome Linked List](linked_list/palindrome_linked_list.py) | Slow/fast pointers to the middle, reverse the second half, compare, then restore | O(n) | O(1) |
+| 54 | Linked list | [Add Two Numbers](linked_list/add_two_numbers.py) | Digit-by-digit addition with a carry; loop while either list or the carry remains | O(max(m, n)) | O(1) |
