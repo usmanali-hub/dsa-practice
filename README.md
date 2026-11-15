@@ -70,3 +70,5 @@ pytest
 | 52 | Linked list | [Linked List Cycle II](linked_list/linked_list_cycle_ii.py) | Floyd's tortoise and hare, then restart one pointer from the head to reach the entrance | O(n) | O(1) |
 | 53 | Linked list | [Palindrome Linked List](linked_list/palindrome_linked_list.py) | Slow/fast pointers to the middle, reverse the second half, compare, then restore | O(n) | O(1) |
 | 54 | Linked list | [Add Two Numbers](linked_list/add_two_numbers.py) | Digit-by-digit addition with a carry; loop while either list or the carry remains | O(max(m, n)) | O(1) |
+| 55 | Linked list | [Middle of the Linked List](linked_list/middle_of_linked_list.py) | Slow and fast pointers; slow is at the middle when fast reaches the end | O(n) | O(1) |
+| 56 | Linked list | [Reorder List](linked_list/reorder_list.py) | Find the middle, reverse the second half, then interleave the halves in place | O(n) | O(1) |

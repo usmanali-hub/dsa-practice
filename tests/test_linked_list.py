@@ -9,9 +9,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from linked_list.add_two_numbers import add_two_numbers
 from linked_list.linked_list_cycle_ii import detect_cycle
 from linked_list.merge_two_sorted_lists import merge_two_lists
+from linked_list.middle_of_linked_list import middle_node
 from linked_list.node import ListNode, build, to_list
 from linked_list.palindrome_linked_list import is_palindrome
 from linked_list.remove_nth_from_end import remove_nth_from_end
+from linked_list.reorder_list import reorder_list
 from linked_list.reverse_list import reverse_list
 
 
@@ -151,3 +153,60 @@ def test_add_two_numbers_matches_integer_addition():
     for _ in range(500):
         x, y = rng.randint(0, 10**rng.randint(0, 12)), rng.randint(0, 10**rng.randint(0, 12))
         assert to_list(add_two_numbers(build(digits(x)), build(digits(y)))) == digits(x + y)
+
+
+@pytest.mark.parametrize(
+    ("values", "expected"),
+    [([], []), ([1], [1]), ([1, 2], [2]), ([1, 2, 3], [2, 3]), ([1, 2, 3, 4], [3, 4]), ([1, 2, 3, 4, 5], [3, 4, 5]), ([1, 2, 3, 4, 5, 6], [4, 5, 6])],
+)
+def test_middle_node_returns_second_middle_for_even_lengths(values, expected):
+    assert to_list(middle_node(build(values))) == expected
+
+
+def test_middle_node_is_the_node_at_index_n_div_2():
+    for n in range(1, 40):
+        head = build(range(n))
+        assert middle_node(head).val == n // 2
+
+
+@pytest.mark.parametrize(
+    ("values", "expected"),
+    [
+        ([], []),
+        ([1], [1]),
+        ([1, 2], [1, 2]),
+        ([1, 2, 3], [1, 3, 2]),
+        ([1, 2, 3, 4], [1, 4, 2, 3]),
+        ([1, 2, 3, 4, 5], [1, 5, 2, 4, 3]),
+    ],
+)
+def test_reorder_list_examples(values, expected):
+    head = build(values)
+    reorder_list(head)
+    assert to_list(head) == expected
+
+
+def test_reorder_list_matches_a_simple_reference_and_keeps_the_same_nodes():
+    for n in range(60):
+        values = list(range(n))
+        head = build(values)
+        nodes = []
+        node = head
+        while node:
+            nodes.append(node)
+            node = node.next
+        reorder_list(head)
+        expected = []
+        lo, hi = 0, n - 1
+        while lo <= hi:
+            expected.append(values[lo])
+            if lo != hi:
+                expected.append(values[hi])
+            lo, hi = lo + 1, hi - 1
+        assert to_list(head) == expected
+        seen = []
+        node = head
+        while node:
+            seen.append(node)
+            node = node.next
+        assert sorted(map(id, seen)) == sorted(map(id, nodes))
