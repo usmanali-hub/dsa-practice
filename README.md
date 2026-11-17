@@ -72,3 +72,5 @@ pytest
 | 54 | Linked list | [Add Two Numbers](linked_list/add_two_numbers.py) | Digit-by-digit addition with a carry; loop while either list or the carry remains | O(max(m, n)) | O(1) |
 | 55 | Linked list | [Middle of the Linked List](linked_list/middle_of_linked_list.py) | Slow and fast pointers; slow is at the middle when fast reaches the end | O(n) | O(1) |
 | 56 | Linked list | [Reorder List](linked_list/reorder_list.py) | Find the middle, reverse the second half, then interleave the halves in place | O(n) | O(1) |
+| 57 | Binary search | [Search Insert Position](binary_search/search_insert_position.py) | Leftmost index with value >= target using a half-open range | O(log n) | O(1) |
+| 58 | Binary search | [Search in Rotated Sorted Array](binary_search/search_rotated_sorted_array.py) | At each step one half is sorted; keep the half that can contain the target | O(log n) | O(1) |
