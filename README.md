@@ -74,3 +74,5 @@ pytest
 | 56 | Linked list | [Reorder List](linked_list/reorder_list.py) | Find the middle, reverse the second half, then interleave the halves in place | O(n) | O(1) |
 | 57 | Binary search | [Search Insert Position](binary_search/search_insert_position.py) | Leftmost index with value >= target using a half-open range | O(log n) | O(1) |
 | 58 | Binary search | [Search in Rotated Sorted Array](binary_search/search_rotated_sorted_array.py) | At each step one half is sorted; keep the half that can contain the target | O(log n) | O(1) |
+| 59 | Binary search | [Sqrt(x)](binary_search/integer_square_root.py) | Binary search for the largest r with r*r <= x over [1, x // 2]; exact integers, no floats | O(log x) | O(1) |
+| 60 | Binary search | [First and Last Position](binary_search/first_last_position.py) | Two binary searches (first index >= target, first index > target); the target occupies the range between | O(log n) | O(1) |
