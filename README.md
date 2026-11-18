@@ -76,3 +76,5 @@ pytest
 | 58 | Binary search | [Search in Rotated Sorted Array](binary_search/search_rotated_sorted_array.py) | At each step one half is sorted; keep the half that can contain the target | O(log n) | O(1) |
 | 59 | Binary search | [Sqrt(x)](binary_search/integer_square_root.py) | Binary search for the largest r with r*r <= x over [1, x // 2]; exact integers, no floats | O(log x) | O(1) |
 | 60 | Binary search | [First and Last Position](binary_search/first_last_position.py) | Two binary searches (first index >= target, first index > target); the target occupies the range between | O(log n) | O(1) |
+| 61 | Binary search | [Find Minimum in Rotated Sorted Array](binary_search/find_min_rotated.py) | Compare mid with hi to discard the sorted half and converge on the inflection point | O(log n) | O(1) |
+| 62 | Binary search | [Find Peak Element](binary_search/find_peak_element.py) | Follow the upward slope (nums[mid] < nums[mid+1]) to guarantee encountering a local maximum | O(log n) | O(1) |

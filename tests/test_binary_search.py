@@ -8,6 +8,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from binary_search.find_min_rotated import find_min
+from binary_search.find_peak_element import find_peak_element
 from binary_search.first_last_position import search_range
 from binary_search.integer_square_root import integer_sqrt
 from binary_search.search_insert_position import search_insert
@@ -81,3 +83,66 @@ def test_search_range_matches_bisect_on_random_inputs_with_many_duplicates():
         target = rng.randint(-1, 9)
         left, right = bisect.bisect_left(nums, target), bisect.bisect_right(nums, target)
         assert search_range(nums, target) == ([left, right - 1] if left < right else [-1, -1])
+
+
+@pytest.mark.parametrize(
+    ("nums", "expected"),
+    [
+        ([3, 4, 5, 1, 2], 1),
+        ([4, 5, 6, 7, 0, 1, 2], 0),
+        ([11, 13, 15, 17], 11),
+        ([1], 1),
+        ([2, 1], 1),
+        ([1, 2], 1),
+    ],
+)
+def test_find_min_examples(nums, expected):
+    assert find_min(nums) == expected
+
+
+def test_find_min_on_all_rotations():
+    base = [2, 5, 8, 11, 14, 17, 20]
+    expected_min = 2
+    for k in range(len(base)):
+        rotated = base[k:] + base[:k]
+        assert find_min(rotated) == expected_min
+
+
+def test_find_min_rejects_empty():
+    with pytest.raises(ValueError):
+        find_min([])
+
+
+@pytest.mark.parametrize(
+    ("nums", "valid_peaks"),
+    [
+        ([1, 2, 3, 1], {2}),
+        ([1, 2, 1, 3, 5, 6, 4], {1, 5}),
+        ([1], {0}),
+        ([1, 2], {1}),
+        ([2, 1], {0}),
+    ],
+)
+def test_find_peak_examples(nums, valid_peaks):
+    idx = find_peak_element(nums)
+    assert idx in valid_peaks
+
+
+def test_find_peak_satisfies_peak_property():
+    rng = random.Random(42)
+    for _ in range(100):
+        n = rng.randint(1, 40)
+        nums = [rng.randint(-100, 100)]
+        while len(nums) < n:
+            val = rng.randint(-100, 100)
+            if val != nums[-1]:
+                nums.append(val)
+        idx = find_peak_element(nums)
+        left = nums[idx - 1] if idx > 0 else float("-inf")
+        right = nums[idx + 1] if idx < len(nums) - 1 else float("-inf")
+        assert nums[idx] > left and nums[idx] > right
+
+
+def test_find_peak_rejects_empty():
+    with pytest.raises(ValueError):
+        find_peak_element([])
