@@ -57,7 +57,14 @@ def test_remove_rejects_bad_n():
 
 
 def test_merge_examples():
-    assert to_list(merge_two_lists(build([1, 2, 4]), build([1, 3, 4]))) == [1, 1, 2, 3, 4, 4]
+    assert to_list(merge_two_lists(build([1, 2, 4]), build([1, 3, 4]))) == [
+        1,
+        1,
+        2,
+        3,
+        4,
+        4,
+    ]
     assert merge_two_lists(None, None) is None
     assert to_list(merge_two_lists(None, build([0]))) == [0]
     assert to_list(merge_two_lists(build([5]), None)) == [5]
@@ -90,7 +97,9 @@ def test_merge_is_stable_on_ties():
     assert out is first_a and out.next is not None and out.next.next is only_b
 
 
-def make_cycle(values: list[int], entry: int | None) -> tuple[ListNode | None, ListNode | None]:
+def make_cycle(
+    values: list[int], entry: int | None
+) -> tuple[ListNode | None, ListNode | None]:
     head = build(values)
     if entry is None or head is None:
         return head, None
@@ -124,7 +133,14 @@ def test_cycle_detection_matches_a_visited_set_on_random_lists():
 
 
 def test_palindrome_examples_and_the_list_is_left_unchanged():
-    for values, expected in (([1, 2, 2, 1], True), ([1, 2], False), ([1], True), ([], True), ([1, 2, 1], True), ([1, 2, 3, 2, 2], False)):
+    for values, expected in (
+        ([1, 2, 2, 1], True),
+        ([1, 2], False),
+        ([1], True),
+        ([], True),
+        ([1, 2, 1], True),
+        ([1, 2, 3, 2, 2], False),
+    ):
         head = build(values)
         assert is_palindrome(head) is expected
         assert to_list(head) == values  # restored
@@ -151,13 +167,26 @@ def test_add_two_numbers_examples():
 def test_add_two_numbers_matches_integer_addition():
     rng = random.Random(13)
     for _ in range(500):
-        x, y = rng.randint(0, 10**rng.randint(0, 12)), rng.randint(0, 10**rng.randint(0, 12))
-        assert to_list(add_two_numbers(build(digits(x)), build(digits(y)))) == digits(x + y)
+        x, y = (
+            rng.randint(0, 10 ** rng.randint(0, 12)),
+            rng.randint(0, 10 ** rng.randint(0, 12)),
+        )
+        assert to_list(add_two_numbers(build(digits(x)), build(digits(y)))) == digits(
+            x + y
+        )
 
 
 @pytest.mark.parametrize(
     ("values", "expected"),
-    [([], []), ([1], [1]), ([1, 2], [2]), ([1, 2, 3], [2, 3]), ([1, 2, 3, 4], [3, 4]), ([1, 2, 3, 4, 5], [3, 4, 5]), ([1, 2, 3, 4, 5, 6], [4, 5, 6])],
+    [
+        ([], []),
+        ([1], [1]),
+        ([1, 2], [2]),
+        ([1, 2, 3], [2, 3]),
+        ([1, 2, 3, 4], [3, 4]),
+        ([1, 2, 3, 4, 5], [3, 4, 5]),
+        ([1, 2, 3, 4, 5, 6], [4, 5, 6]),
+    ],
 )
 def test_middle_node_returns_second_middle_for_even_lengths(values, expected):
     assert to_list(middle_node(build(values))) == expected

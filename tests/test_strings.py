@@ -17,7 +17,14 @@ from strings.valid_parentheses import is_valid
 
 @pytest.mark.parametrize(
     "s,expected",
-    [("A man, a plan, a canal: Panama", True), ("race a car", False), ("", True), (" ", True), ("0P", False), ("ab_a", True)],
+    [
+        ("A man, a plan, a canal: Panama", True),
+        ("race a car", False),
+        ("", True),
+        (" ", True),
+        ("0P", False),
+        ("ab_a", True),
+    ],
 )
 def test_is_palindrome(s, expected):
     assert is_palindrome(s) is expected
@@ -25,7 +32,15 @@ def test_is_palindrome(s, expected):
 
 @pytest.mark.parametrize(
     "s,expected",
-    [("abcabcbb", 3), ("bbbbb", 1), ("pwwkew", 3), ("", 0), ("abba", 2), ("dvdf", 3), ("a", 1)],
+    [
+        ("abcabcbb", 3),
+        ("bbbbb", 1),
+        ("pwwkew", 3),
+        ("", 0),
+        ("abba", 2),
+        ("dvdf", 3),
+        ("a", 1),
+    ],
 )
 def test_longest_substring(s, expected):
     assert length_of_longest_substring(s) == expected
@@ -33,7 +48,13 @@ def test_longest_substring(s, expected):
 
 @pytest.mark.parametrize(
     "s,t,expected",
-    [("anagram", "nagaram", True), ("rat", "car", False), ("", "", True), ("a", "ab", False), ("aab", "abb", False)],
+    [
+        ("anagram", "nagaram", True),
+        ("rat", "car", False),
+        ("", "", True),
+        ("a", "ab", False),
+        ("aab", "abb", False),
+    ],
 )
 def test_is_anagram(s, t, expected):
     assert is_anagram(s, t) is expected
@@ -41,7 +62,11 @@ def test_is_anagram(s, t, expected):
 
 def test_group_anagrams():
     result = group_anagrams(["eat", "tea", "tan", "ate", "nat", "bat"])
-    assert sorted(sorted(g) for g in result) == [["ate", "eat", "tea"], ["bat"], ["nat", "tan"]]
+    assert sorted(sorted(g) for g in result) == [
+        ["ate", "eat", "tea"],
+        ["bat"],
+        ["nat", "tan"],
+    ]
 
 
 def test_group_anagrams_edge_cases():
@@ -52,7 +77,14 @@ def test_group_anagrams_edge_cases():
 
 @pytest.mark.parametrize(
     "words,expected",
-    [(["flower", "flow", "flight"], "fl"), (["dog", "racecar", "car"], ""), ([], ""), (["solo"], "solo"), (["", "a"], ""), (["ab", "ab"], "ab")],
+    [
+        (["flower", "flow", "flight"], "fl"),
+        (["dog", "racecar", "car"], ""),
+        ([], ""),
+        (["solo"], "solo"),
+        (["", "a"], ""),
+        (["ab", "ab"], "ab"),
+    ],
 )
 def test_longest_common_prefix(words, expected):
     assert longest_common_prefix(words) == expected
@@ -60,7 +92,16 @@ def test_longest_common_prefix(words, expected):
 
 @pytest.mark.parametrize(
     "s,expected",
-    [("()", True), ("()[]{}", True), ("(]", False), ("([)]", False), ("{[]}", True), ("", True), ("(", False), (")", False)],
+    [
+        ("()", True),
+        ("()[]{}", True),
+        ("(]", False),
+        ("([)]", False),
+        ("{[]}", True),
+        ("", True),
+        ("(", False),
+        (")", False),
+    ],
 )
 def test_is_valid(s, expected):
     assert is_valid(s) is expected
@@ -68,7 +109,13 @@ def test_is_valid(s, expected):
 
 @pytest.mark.parametrize(
     "s,expected",
-    [("the sky is blue", "blue is sky the"), ("  hello   world  ", "world hello"), ("a", "a"), ("", ""), ("   ", "")],
+    [
+        ("the sky is blue", "blue is sky the"),
+        ("  hello   world  ", "world hello"),
+        ("a", "a"),
+        ("", ""),
+        ("   ", ""),
+    ],
 )
 def test_reverse_words(s, expected):
     assert reverse_words(s) == expected
@@ -76,7 +123,14 @@ def test_reverse_words(s, expected):
 
 @pytest.mark.parametrize(
     "s,t,expected",
-    [("abc", "ahbgdc", True), ("axc", "ahbgdc", False), ("", "abc", True), ("a", "", False), ("", "", True), ("aa", "a", False)],
+    [
+        ("abc", "ahbgdc", True),
+        ("axc", "ahbgdc", False),
+        ("", "abc", True),
+        ("a", "", False),
+        ("", "", True),
+        ("aa", "a", False),
+    ],
 )
 def test_is_subsequence(s, t, expected):
     assert is_subsequence(s, t) is expected

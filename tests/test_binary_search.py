@@ -12,13 +12,24 @@ from binary_search.find_min_rotated import find_min
 from binary_search.find_peak_element import find_peak_element
 from binary_search.first_last_position import search_range
 from binary_search.integer_square_root import integer_sqrt
+from binary_search.median_two_sorted_arrays import find_median_sorted_arrays
 from binary_search.search_insert_position import search_insert
 from binary_search.search_rotated_sorted_array import search
+from binary_search.single_non_duplicate import single_non_duplicate
 
 
 @pytest.mark.parametrize(
     ("nums", "target", "expected"),
-    [([], 5, 0), ([1], 0, 0), ([1], 1, 0), ([1], 2, 1), ([1, 3, 5, 6], 5, 2), ([1, 3, 5, 6], 2, 1), ([1, 3, 5, 6], 7, 4), ([1, 3, 5, 6], 0, 0)],
+    [
+        ([], 5, 0),
+        ([1], 0, 0),
+        ([1], 1, 0),
+        ([1], 2, 1),
+        ([1, 3, 5, 6], 5, 2),
+        ([1, 3, 5, 6], 2, 1),
+        ([1, 3, 5, 6], 7, 4),
+        ([1, 3, 5, 6], 0, 0),
+    ],
 )
 def test_search_insert_examples(nums, target, expected):
     assert search_insert(nums, target) == expected
@@ -34,7 +45,15 @@ def test_search_insert_matches_bisect_left_on_random_inputs():
 
 @pytest.mark.parametrize(
     ("nums", "target", "expected"),
-    [([4, 5, 6, 7, 0, 1, 2], 0, 4), ([4, 5, 6, 7, 0, 1, 2], 3, -1), ([1], 0, -1), ([1], 1, 0), ([], 1, -1), ([3, 1], 1, 1), ([5, 1, 3], 5, 0)],
+    [
+        ([4, 5, 6, 7, 0, 1, 2], 0, 4),
+        ([4, 5, 6, 7, 0, 1, 2], 3, -1),
+        ([1], 0, -1),
+        ([1], 1, 0),
+        ([], 1, -1),
+        ([3, 1], 1, 1),
+        ([5, 1, 3], 5, 0),
+    ],
 )
 def test_search_rotated_examples(nums, target, expected):
     assert search(nums, target) == expected
@@ -53,13 +72,33 @@ def test_search_rotated_finds_every_element_and_rejects_absent_ones_for_every_ro
             assert all(search(nums, a) == -1 for a in absent)
 
 
-@pytest.mark.parametrize(("x", "expected"), [(0, 0), (1, 1), (2, 1), (3, 1), (4, 2), (8, 2), (9, 3), (15, 3), (16, 4), (2147395599, 46339)])
+@pytest.mark.parametrize(
+    ("x", "expected"),
+    [
+        (0, 0),
+        (1, 1),
+        (2, 1),
+        (3, 1),
+        (4, 2),
+        (8, 2),
+        (9, 3),
+        (15, 3),
+        (16, 4),
+        (2147395599, 46339),
+    ],
+)
 def test_integer_sqrt_examples(x, expected):
     assert integer_sqrt(x) == expected
 
 
 def test_integer_sqrt_matches_math_isqrt_including_perfect_squares_and_huge_values():
-    for x in list(range(2000)) + [10**18, 10**18 - 1, (10**9 + 7) ** 2, (10**9 + 7) ** 2 - 1, 10**40 + 12345]:
+    for x in list(range(2000)) + [
+        10**18,
+        10**18 - 1,
+        (10**9 + 7) ** 2,
+        (10**9 + 7) ** 2 - 1,
+        10**40 + 12345,
+    ]:
         assert integer_sqrt(x) == math.isqrt(x)
 
 
@@ -70,7 +109,15 @@ def test_integer_sqrt_rejects_negative_numbers():
 
 @pytest.mark.parametrize(
     ("nums", "target", "expected"),
-    [([5, 7, 7, 8, 8, 10], 8, [3, 4]), ([5, 7, 7, 8, 8, 10], 6, [-1, -1]), ([], 0, [-1, -1]), ([1], 1, [0, 0]), ([2, 2, 2, 2], 2, [0, 3]), ([1, 2, 3], 4, [-1, -1]), ([1, 2, 3], 0, [-1, -1])],
+    [
+        ([5, 7, 7, 8, 8, 10], 8, [3, 4]),
+        ([5, 7, 7, 8, 8, 10], 6, [-1, -1]),
+        ([], 0, [-1, -1]),
+        ([1], 1, [0, 0]),
+        ([2, 2, 2, 2], 2, [0, 3]),
+        ([1, 2, 3], 4, [-1, -1]),
+        ([1, 2, 3], 0, [-1, -1]),
+    ],
 )
 def test_search_range_examples(nums, target, expected):
     assert search_range(nums, target) == expected
@@ -81,8 +128,13 @@ def test_search_range_matches_bisect_on_random_inputs_with_many_duplicates():
     for _ in range(500):
         nums = sorted(rng.choice(range(8)) for _ in range(rng.randint(0, 25)))
         target = rng.randint(-1, 9)
-        left, right = bisect.bisect_left(nums, target), bisect.bisect_right(nums, target)
-        assert search_range(nums, target) == ([left, right - 1] if left < right else [-1, -1])
+        left, right = (
+            bisect.bisect_left(nums, target),
+            bisect.bisect_right(nums, target),
+        )
+        assert search_range(nums, target) == (
+            [left, right - 1] if left < right else [-1, -1]
+        )
 
 
 @pytest.mark.parametrize(
@@ -146,3 +198,67 @@ def test_find_peak_satisfies_peak_property():
 def test_find_peak_rejects_empty():
     with pytest.raises(ValueError):
         find_peak_element([])
+
+
+@pytest.mark.parametrize(
+    ("nums", "expected"),
+    [
+        ([1], 1),
+        ([1, 1, 2], 2),
+        ([3, 3, 7, 7, 10, 11, 11], 10),
+        ([1, 1, 2, 3, 3, 4, 4, 8, 8], 2),
+        ([0, 0, 1, 1, 1000], 1000),
+    ],
+)
+def test_single_non_duplicate_examples(nums, expected):
+    assert single_non_duplicate(nums) == expected
+
+
+def test_single_non_duplicate_rejects_empty():
+    with pytest.raises(ValueError):
+        single_non_duplicate([])
+
+
+def test_single_non_duplicate_on_random_arrays():
+    rng = random.Random(5)
+    for _ in range(300):
+        size = rng.randint(0, 20)
+        pairs = rng.sample(range(-100, 100), size)
+        single = rng.choice(range(-200, 200))
+        nums = sorted(pairs + pairs + [single])
+        assert single_non_duplicate(nums) == single
+
+
+@pytest.mark.parametrize(
+    ("a", "b", "expected"),
+    [
+        ([1, 3], [2], 2.0),
+        ([1, 2], [3, 4], 2.5),
+        ([], [1], 1.0),
+        ([2], [], 2.0),
+        ([0, 0], [0, 0], 0.0),
+        ([1, 3, 5], [2, 4, 6], 3.5),
+    ],
+)
+def test_median_two_sorted_arrays_examples(a, b, expected):
+    assert find_median_sorted_arrays(a, b) == expected
+
+
+def test_median_rejects_two_empty_arrays():
+    with pytest.raises(ValueError):
+        find_median_sorted_arrays([], [])
+
+
+def test_median_matches_a_plain_merge_on_random_inputs():
+    rng = random.Random(6)
+    for _ in range(500):
+        a = sorted(rng.randint(-50, 50) for _ in range(rng.randint(0, 15)))
+        b = sorted(rng.randint(-50, 50) for _ in range(rng.randint(0, 15)))
+        if not a and not b:
+            continue
+        merged = sorted(a + b)
+        n = len(merged)
+        expected = (
+            merged[n // 2] if n % 2 else (merged[n // 2 - 1] + merged[n // 2]) / 2
+        )
+        assert find_median_sorted_arrays(a, b) == expected

@@ -18,7 +18,19 @@ from stack_queue.valid_parentheses import is_valid
 
 @pytest.mark.parametrize(
     "s,expected",
-    [("()", True), ("()[]{}", True), ("(]", False), ("([)]", False), ("{[]}", True), ("", True), ("(", False), (")", False), ("a(b)c", True), ("((", False), ("}{", False)],
+    [
+        ("()", True),
+        ("()[]{}", True),
+        ("(]", False),
+        ("([)]", False),
+        ("{[]}", True),
+        ("", True),
+        ("(", False),
+        (")", False),
+        ("a(b)c", True),
+        ("((", False),
+        ("}{", False),
+    ],
 )
 def test_is_valid_examples(s, expected):
     assert is_valid(s) is expected
@@ -37,7 +49,15 @@ def test_is_valid_matches_a_brute_force_reducer():
 
 @pytest.mark.parametrize(
     "temps,expected",
-    [([73, 74, 75, 71, 69, 72, 76, 73], [1, 1, 4, 2, 1, 1, 0, 0]), ([30, 40, 50, 60], [1, 1, 1, 0]), ([30, 60, 90], [1, 1, 0]), ([], []), ([50], [0]), ([60, 50, 40], [0, 0, 0]), ([50, 50, 50], [0, 0, 0])],
+    [
+        ([73, 74, 75, 71, 69, 72, 76, 73], [1, 1, 4, 2, 1, 1, 0, 0]),
+        ([30, 40, 50, 60], [1, 1, 1, 0]),
+        ([30, 60, 90], [1, 1, 0]),
+        ([], []),
+        ([50], [0]),
+        ([60, 50, 40], [0, 0, 0]),
+        ([50, 50, 50], [0, 0, 0]),
+    ],
 )
 def test_daily_temperatures_examples(temps, expected):
     assert daily_temperatures(temps) == expected
@@ -47,7 +67,10 @@ def test_daily_temperatures_matches_brute_force():
     rng = random.Random(42)
     for _ in range(600):
         temps = [rng.randint(30, 40) for _ in range(rng.randint(0, 14))]
-        brute = [next((j - i for j in range(i + 1, len(temps)) if temps[j] > temps[i]), 0) for i in range(len(temps))]
+        brute = [
+            next((j - i for j in range(i + 1, len(temps)) if temps[j] > temps[i]), 0)
+            for i in range(len(temps))
+        ]
         assert daily_temperatures(temps) == brute
 
 
@@ -64,7 +87,9 @@ def test_queue_using_stacks_matches_a_deque_on_random_operations():
                 q.push(x)
                 ref.append(x)
             elif ref:
-                assert (q.pop() if op == "pop" else q.peek()) == (ref.popleft() if op == "pop" else ref[0])
+                assert (q.pop() if op == "pop" else q.peek()) == (
+                    ref.popleft() if op == "pop" else ref[0]
+                )
             assert q.empty() is (not ref)
 
 
@@ -78,8 +103,15 @@ def test_queue_using_stacks_empty_errors():
 
 @pytest.mark.parametrize(
     "tokens,expected",
-    [(["2", "1", "+", "3", "*"], 9), (["4", "13", "5", "/", "+"], 6), (["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"], 22),
-     (["7", "-2", "/"], -3), (["-7", "2", "/"], -3), (["5"], 5), (["3", "4", "-"], -1)],
+    [
+        (["2", "1", "+", "3", "*"], 9),
+        (["4", "13", "5", "/", "+"], 6),
+        (["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"], 22),
+        (["7", "-2", "/"], -3),
+        (["-7", "2", "/"], -3),
+        (["5"], 5),
+        (["3", "4", "-"], -1),
+    ],
 )
 def test_eval_rpn_examples(tokens, expected):
     assert eval_rpn(tokens) == expected
@@ -124,7 +156,18 @@ def test_min_stack_empty_errors():
             call()
 
 
-@pytest.mark.parametrize("heights,expected", [([2, 1, 5, 6, 2, 3], 10), ([2, 4], 4), ([], 0), ([5], 5), ([3, 3, 3], 9), ([6, 5, 4, 3], 12), ([0, 0], 0)])
+@pytest.mark.parametrize(
+    "heights,expected",
+    [
+        ([2, 1, 5, 6, 2, 3], 10),
+        ([2, 4], 4),
+        ([], 0),
+        ([5], 5),
+        ([3, 3, 3], 9),
+        ([6, 5, 4, 3], 12),
+        ([0, 0], 0),
+    ],
+)
 def test_largest_rectangle_examples(heights, expected):
     assert largest_rectangle(heights) == expected
 
@@ -133,7 +176,14 @@ def test_largest_rectangle_matches_brute_force():
     rng = random.Random(46)
     for _ in range(500):
         h = [rng.randint(0, 9) for _ in range(rng.randint(0, 12))]
-        brute = max((min(h[i : j + 1]) * (j - i + 1) for i in range(len(h)) for j in range(i, len(h))), default=0)
+        brute = max(
+            (
+                min(h[i : j + 1]) * (j - i + 1)
+                for i in range(len(h))
+                for j in range(i, len(h))
+            ),
+            default=0,
+        )
         assert largest_rectangle(h) == brute
 
 
@@ -148,7 +198,9 @@ def test_stack_using_queues_matches_a_list_on_random_operations():
                 st.push(x)
                 ref.append(x)
             elif ref:
-                assert (st.pop() if op == "pop" else st.top()) == (ref.pop() if op == "pop" else ref[-1])
+                assert (st.pop() if op == "pop" else st.top()) == (
+                    ref.pop() if op == "pop" else ref[-1]
+                )
             assert st.empty() is (not ref)
 
 
@@ -160,7 +212,17 @@ def test_stack_using_queues_empty_errors():
         st.top()
 
 
-@pytest.mark.parametrize("nums,expected", [([1, 2, 1], [2, -1, 2]), ([1, 2, 3, 4, 3], [2, 3, 4, -1, 4]), ([], []), ([5], [-1]), ([3, 3, 3], [-1, -1, -1]), ([5, 4, 3, 2, 1], [-1, 5, 5, 5, 5])])
+@pytest.mark.parametrize(
+    "nums,expected",
+    [
+        ([1, 2, 1], [2, -1, 2]),
+        ([1, 2, 3, 4, 3], [2, 3, 4, -1, 4]),
+        ([], []),
+        ([5], [-1]),
+        ([3, 3, 3], [-1, -1, -1]),
+        ([5, 4, 3, 2, 1], [-1, 5, 5, 5, 5]),
+    ],
+)
 def test_next_greater_circular_examples(nums, expected):
     assert next_greater_circular(nums) == expected
 
@@ -172,5 +234,14 @@ def test_next_greater_circular_matches_brute_force():
         n = len(nums)
         brute = []
         for i in range(n):
-            brute.append(next((nums[(i + k) % n] for k in range(1, n) if nums[(i + k) % n] > nums[i]), -1))
+            brute.append(
+                next(
+                    (
+                        nums[(i + k) % n]
+                        for k in range(1, n)
+                        if nums[(i + k) % n] > nums[i]
+                    ),
+                    -1,
+                )
+            )
         assert next_greater_circular(nums) == brute

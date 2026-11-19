@@ -20,7 +20,9 @@ def is_palindrome(head: ListNode | None) -> bool:
     while fast is not None and fast.next is not None:
         assert slow is not None
         slow, fast = slow.next, fast.next.next
-    second = _reverse(slow)  # for odd lengths slow is the middle; it ends the reversed half, so it is compared with itself
+    second = _reverse(
+        slow
+    )  # for odd lengths slow is the middle; it ends the reversed half, so it is compared with itself
     left, right = head, second
     result = True
     while right is not None:

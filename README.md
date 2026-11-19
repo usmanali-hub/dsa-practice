@@ -78,3 +78,5 @@ pytest
 | 60 | Binary search | [First and Last Position](binary_search/first_last_position.py) | Two binary searches (first index >= target, first index > target); the target occupies the range between | O(log n) | O(1) |
 | 61 | Binary search | [Find Minimum in Rotated Sorted Array](binary_search/find_min_rotated.py) | Compare mid with hi to discard the sorted half and converge on the inflection point | O(log n) | O(1) |
 | 62 | Binary search | [Find Peak Element](binary_search/find_peak_element.py) | Follow the upward slope (nums[mid] < nums[mid+1]) to guarantee encountering a local maximum | O(log n) | O(1) |
+| 63 | Binary search | [Single Element in a Sorted Array](binary_search/single_non_duplicate.py) | Binary search on even indices; a broken pair means the single element is at or before mid | O(log n) | O(1) |
+| 64 | Binary search | [Median of Two Sorted Arrays](binary_search/median_two_sorted_arrays.py) | Binary search the partition of the shorter array so each side holds half the combined length | O(log(min(m, n))) | O(1) |
