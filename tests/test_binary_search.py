@@ -16,6 +16,8 @@ from binary_search.median_two_sorted_arrays import find_median_sorted_arrays
 from binary_search.search_insert_position import search_insert
 from binary_search.search_rotated_sorted_array import search
 from binary_search.single_non_duplicate import single_non_duplicate
+from binary_search.split_array_largest_sum import pieces_needed, split_array
+from binary_search.sqrt_precision import sqrt_with_precision
 
 
 @pytest.mark.parametrize(
@@ -262,3 +264,82 @@ def test_median_matches_a_plain_merge_on_random_inputs():
             merged[n // 2] if n % 2 else (merged[n // 2 - 1] + merged[n // 2]) / 2
         )
         assert find_median_sorted_arrays(a, b) == expected
+
+
+@pytest.mark.parametrize(
+    ("x", "k", "expected"),
+    [(2, 1, 1.4), (2, 4, 1.4142), (0, 2, 0.0), (1, 3, 1.0), (10, 0, 3.0), (4, 5, 2.0)],
+)
+def test_sqrt_with_precision_examples(x, k, expected):
+    assert sqrt_with_precision(x, k) == expected
+
+
+def test_sqrt_with_precision_rejects_negative_inputs():
+    with pytest.raises(ValueError):
+        sqrt_with_precision(-1, 2)
+    with pytest.raises(ValueError):
+        sqrt_with_precision(4, -1)
+
+
+def test_sqrt_with_precision_truncates_not_rounds():
+    # true sqrt(2) ~= 1.41421356..., truncated (not rounded) to 3 places is 1.414, not 1.415 or 1.414x rounding up
+    assert sqrt_with_precision(2, 3) == 1.414
+
+
+def test_sqrt_with_precision_matches_math_sqrt_within_the_requested_precision():
+    import math
+
+    rng = random.Random(7)
+    for _ in range(200):
+        x = rng.uniform(0, 10_000)
+        k = rng.randint(0, 6)
+        got = sqrt_with_precision(x, k)
+        assert got <= math.sqrt(x) + 10 ** (-k if k else 0)
+        assert abs(got - math.sqrt(x)) < 10 ** (-k) + 1e-9
+
+
+@pytest.mark.parametrize(
+    ("nums", "k", "expected"),
+    [
+        ([7, 2, 5, 10, 8], 2, 18),
+        ([1, 2, 3, 4, 5], 2, 9),
+        ([1, 4, 4], 3, 4),
+        ([1], 1, 1),
+        ([5, 5, 5, 5], 4, 5),
+    ],
+)
+def test_split_array_examples(nums, k, expected):
+    assert split_array(nums, k) == expected
+
+
+@pytest.mark.parametrize(("nums", "k"), [([], 1), ([1, 2], 0), ([1, 2], 3)])
+def test_split_array_rejects_invalid_k(nums, k):
+    with pytest.raises(ValueError):
+        split_array(nums, k)
+
+
+def test_split_array_matches_brute_force_over_all_partitions_into_k_pieces():
+    import itertools
+
+    def brute_force(nums, k):
+        n = len(nums)
+        best = None
+        for cuts in itertools.combinations(range(1, n), k - 1):
+            bounds = (0, *cuts, n)
+            largest = max(
+                sum(nums[bounds[i] : bounds[i + 1]]) for i in range(len(bounds) - 1)
+            )
+            best = largest if best is None else min(best, largest)
+        return best
+
+    rng = random.Random(8)
+    for _ in range(80):
+        n = rng.randint(1, 7)
+        nums = [rng.randint(1, 20) for _ in range(n)]
+        k = rng.randint(1, n)
+        assert split_array(nums, k) == brute_force(nums, k)
+
+
+def test_pieces_needed_counts_a_known_split():
+    assert pieces_needed([7, 2, 5, 10, 8], 18) == 2
+    assert pieces_needed([1, 1, 1, 1], 1) == 4
