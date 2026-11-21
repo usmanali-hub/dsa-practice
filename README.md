@@ -82,3 +82,5 @@ pytest
 | 64 | Binary search | [Median of Two Sorted Arrays](binary_search/median_two_sorted_arrays.py) | Binary search the partition of the shorter array so each side holds half the combined length | O(log(min(m, n))) | O(1) |
 | 65 | Binary search | [Square Root with k Decimal Places](binary_search/sqrt_precision.py) | Binary search over scaled integers so truncation never involves a float comparison | O(log(x * 10^k)) | O(1) |
 | 66 | Binary search | [Split Array Largest Sum](binary_search/split_array_largest_sum.py) | Binary search the answer itself; a greedy O(n) scan checks whether a candidate cap needs at most k pieces | O(n log(sum(nums))) | O(1) |
+| 67 | Trees | [Validate Binary Search Tree](trees/validate_bst.py) | Recurse with inherited (low, high) bounds, not just a local parent/child check | O(n) | O(h) |
+| 68 | Trees | [Lowest Common Ancestor of a Binary Tree](trees/lowest_common_ancestor.py) | Post-order recursion; a node is the LCA once p and q are found in different subtrees of it | O(n) | O(h) |
