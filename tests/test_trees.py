@@ -6,8 +6,10 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from trees.level_order import zigzag_level_order
 from trees.lowest_common_ancestor import lowest_common_ancestor
 from trees.node import TreeNode, build_level_order, inorder
+from trees.serialize_deserialize import deserialize, serialize
 from trees.validate_bst import is_valid_bst
 
 
@@ -125,3 +127,81 @@ def acc_nodes(root):
     yield root
     yield from acc_nodes(root.left)
     yield from acc_nodes(root.right)
+
+
+@pytest.mark.parametrize(
+    ("values", "expected"),
+    [
+        ([3, 9, 20, None, None, 15, 7], [[3], [20, 9], [15, 7]]),
+        ([], []),
+        ([1], [[1]]),
+        ([1, 2, 3, 4, 5, 6, 7], [[1], [3, 2], [4, 5, 6, 7]]),
+    ],
+)
+def test_zigzag_level_order_examples(values, expected):
+    assert zigzag_level_order(build_level_order(values)) == expected
+
+
+def test_zigzag_level_order_values_match_a_plain_bfs_ignoring_direction():
+    rng = random.Random(11)
+    for _ in range(100):
+        values = [
+            rng.randint(0, 50) if rng.random() > 0.3 else None
+            for _ in range(rng.randint(0, 20))
+        ]
+        if not values or values[0] is None:
+            continue
+        root = build_level_order(values)
+        zigzag = zigzag_level_order(root)
+        plain_bfs: list[list[int]] = []
+        queue = [root]
+        while queue:
+            plain_bfs.append([n.val for n in queue])
+            queue = [c for n in queue for c in (n.left, n.right) if c is not None]
+        assert [sorted(level) for level in zigzag] == [
+            sorted(level) for level in plain_bfs
+        ]
+        assert all(
+            level == (plain[::-1] if i % 2 else plain)
+            for i, (level, plain) in enumerate(zip(zigzag, plain_bfs))
+        )
+
+
+@pytest.mark.parametrize(
+    "values",
+    [
+        [1, 2, 3],
+        [],
+        [1],
+        [1, None, 2, None, None, None, 3],
+        [5, 4, 7, 3, None, 2, None, -1, None, 9],
+    ],
+)
+def test_serialize_then_deserialize_round_trips(values):
+    root = build_level_order(values)
+    data = serialize(root)
+    rebuilt = deserialize(data)
+    assert serialize(rebuilt) == data
+
+
+def test_serialize_distinguishes_trees_with_the_same_inorder_values():
+    # A root with only a right child vs. only a left child have the same single value but different shape
+    right_only = build_level_order([1, None, 2])
+    left_only = build_level_order([1, 2])
+    assert serialize(right_only) != serialize(left_only)
+
+
+def test_serialize_deserialize_on_random_trees_preserves_structure_and_values():
+    rng = random.Random(12)
+    for _ in range(150):
+        values = [
+            rng.randint(-100, 100) if rng.random() > 0.25 else None
+            for _ in range(rng.randint(0, 25))
+        ]
+        if values and values[0] is None:
+            values[0] = rng.randint(-100, 100)
+        root = build_level_order(values)
+        data = serialize(root)
+        rebuilt = deserialize(data)
+        assert list(inorder(rebuilt)) == list(inorder(root))
+        assert serialize(rebuilt) == data

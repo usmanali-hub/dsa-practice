@@ -84,3 +84,5 @@ pytest
 | 66 | Binary search | [Split Array Largest Sum](binary_search/split_array_largest_sum.py) | Binary search the answer itself; a greedy O(n) scan checks whether a candidate cap needs at most k pieces | O(n log(sum(nums))) | O(1) |
 | 67 | Trees | [Validate Binary Search Tree](trees/validate_bst.py) | Recurse with inherited (low, high) bounds, not just a local parent/child check | O(n) | O(h) |
 | 68 | Trees | [Lowest Common Ancestor of a Binary Tree](trees/lowest_common_ancestor.py) | Post-order recursion; a node is the LCA once p and q are found in different subtrees of it | O(n) | O(h) |
+| 69 | Trees | [Zigzag Level Order Traversal](trees/level_order.py) | Plain BFS by level; reverse every other level's list in place | O(n) | O(n) |
+| 70 | Trees | [Serialize and Deserialize Binary Tree](trees/serialize_deserialize.py) | Pre-order traversal with a '#' marker for missing children, rebuilt by consuming the same sequence recursively | O(n) | O(n) |
