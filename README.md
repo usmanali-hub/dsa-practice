@@ -86,3 +86,5 @@ pytest
 | 68 | Trees | [Lowest Common Ancestor of a Binary Tree](trees/lowest_common_ancestor.py) | Post-order recursion; a node is the LCA once p and q are found in different subtrees of it | O(n) | O(h) |
 | 69 | Trees | [Zigzag Level Order Traversal](trees/level_order.py) | Plain BFS by level; reverse every other level's list in place | O(n) | O(n) |
 | 70 | Trees | [Serialize and Deserialize Binary Tree](trees/serialize_deserialize.py) | Pre-order traversal with a '#' marker for missing children, rebuilt by consuming the same sequence recursively | O(n) | O(n) |
+| 71 | Trees | [Diameter of Binary Tree](trees/diameter_of_binary_tree.py) | One post-order pass; the diameter through each node is left height + right height, tracked as a running max | O(n) | O(h) |
+| 72 | Trees | [Path Sum II](trees/path_sum_ii.py) | DFS with a backtracked running path; a leaf whose remaining target hits zero records a copy of the path | O(n^2) worst case | O(h) |

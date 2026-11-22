@@ -6,9 +6,11 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from trees.diameter_of_binary_tree import diameter_of_binary_tree
 from trees.level_order import zigzag_level_order
 from trees.lowest_common_ancestor import lowest_common_ancestor
 from trees.node import TreeNode, build_level_order, inorder
+from trees.path_sum_ii import path_sum_ii
 from trees.serialize_deserialize import deserialize, serialize
 from trees.validate_bst import is_valid_bst
 
@@ -205,3 +207,56 @@ def test_serialize_deserialize_on_random_trees_preserves_structure_and_values():
         rebuilt = deserialize(data)
         assert list(inorder(rebuilt)) == list(inorder(root))
         assert serialize(rebuilt) == data
+
+
+@pytest.mark.parametrize(
+    ("values", "expected"),
+    [
+        (
+            [1, 2, 3, 4, 5],
+            3,
+        ),  # longest path: 4 -> 2 -> 1 -> 3 or 4 -> 2 -> 5, both length 3
+        ([1], 0),
+        ([], 0),
+        ([1, 2], 1),
+        (
+            [1, None, 2, None, None, None, 3],
+            1,
+        ),  # right child's right child: root-2-3 is the only path
+    ],
+)
+def test_diameter_of_binary_tree(values, expected):
+    assert diameter_of_binary_tree(build_level_order(values)) == expected
+
+
+def test_diameter_can_pass_through_a_non_root_node():
+    # the longest path, 6-5-2-1-3 (4 edges), passes through the root but is not simply left-height + right-height
+    # of the root's immediate children — it runs through the deepest node of node 2's own subtree
+    root = TreeNode(
+        1, TreeNode(2, TreeNode(4), TreeNode(5, None, TreeNode(6))), TreeNode(3)
+    )
+    assert diameter_of_binary_tree(root) == 4
+
+
+def test_path_sum_ii_finds_both_matching_root_to_leaf_paths():
+    root = build_level_order([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1])
+    result = path_sum_ii(root, 22)
+    assert sorted(result) == sorted([[5, 4, 11, 2], [5, 8, 4, 5]])
+
+
+def test_path_sum_ii_returns_empty_list_when_no_path_matches():
+    root = build_level_order([1, 2, 3])
+    assert path_sum_ii(root, 100) == []
+
+
+def test_path_sum_ii_requires_reaching_a_leaf_not_just_the_right_partial_sum():
+    # 1 -> 2 sums to 3 but node 2 is not a leaf (it has a child 0), so that partial sum must not be reported;
+    # only the full root-to-leaf path 1 -> 2 -> 0 (which also sums to 3) counts
+    root = TreeNode(1, TreeNode(2, TreeNode(0)))
+    assert path_sum_ii(root, 3) == [[1, 2, 0]]
+    assert path_sum_ii(root, 100) == []
+
+
+def test_path_sum_ii_single_node_tree():
+    assert path_sum_ii(build_level_order([5]), 5) == [[5]]
+    assert path_sum_ii(build_level_order([5]), 4) == []
