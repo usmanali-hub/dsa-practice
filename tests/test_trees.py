@@ -7,10 +7,12 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from trees.diameter_of_binary_tree import diameter_of_binary_tree
+from trees.kth_smallest_in_bst import kth_smallest
 from trees.level_order import zigzag_level_order
 from trees.lowest_common_ancestor import lowest_common_ancestor
 from trees.node import TreeNode, build_level_order, inorder
 from trees.path_sum_ii import path_sum_ii
+from trees.right_side_view import right_side_view
 from trees.serialize_deserialize import deserialize, serialize
 from trees.validate_bst import is_valid_bst
 
@@ -260,3 +262,32 @@ def test_path_sum_ii_requires_reaching_a_leaf_not_just_the_right_partial_sum():
 def test_path_sum_ii_single_node_tree():
     assert path_sum_ii(build_level_order([5]), 5) == [[5]]
     assert path_sum_ii(build_level_order([5]), 4) == []
+
+
+def test_kth_smallest_in_bst_matches_sorted_order():
+    root = build_level_order([5, 3, 6, 2, 4, None, None, 1])
+    assert [kth_smallest(root, k) for k in range(1, 6)] == [1, 2, 3, 4, 5]
+
+
+def test_kth_smallest_in_bst_single_node():
+    assert kth_smallest(build_level_order([42]), 1) == 42
+
+
+def test_kth_smallest_in_bst_raises_when_k_exceeds_node_count():
+    with pytest.raises(ValueError, match="fewer than"):
+        kth_smallest(build_level_order([1, 2]), 5)
+
+
+def test_right_side_view_returns_the_rightmost_node_per_level():
+    root = build_level_order([1, 2, 3, None, 5, None, 4])
+    assert right_side_view(root) == [1, 3, 4]
+
+
+def test_right_side_view_handles_a_level_with_only_a_left_child():
+    # level 2's rightmost visible node is the left child 3, since the root has no right child at that level
+    root = TreeNode(1, TreeNode(2, TreeNode(3)))
+    assert right_side_view(root) == [1, 2, 3]
+
+
+def test_right_side_view_empty_tree():
+    assert right_side_view(None) == []

@@ -88,3 +88,5 @@ pytest
 | 70 | Trees | [Serialize and Deserialize Binary Tree](trees/serialize_deserialize.py) | Pre-order traversal with a '#' marker for missing children, rebuilt by consuming the same sequence recursively | O(n) | O(n) |
 | 71 | Trees | [Diameter of Binary Tree](trees/diameter_of_binary_tree.py) | One post-order pass; the diameter through each node is left height + right height, tracked as a running max | O(n) | O(h) |
 | 72 | Trees | [Path Sum II](trees/path_sum_ii.py) | DFS with a backtracked running path; a leaf whose remaining target hits zero records a copy of the path | O(n^2) worst case | O(h) |
+| 73 | Trees | [Kth Smallest Element in a BST](trees/kth_smallest_in_bst.py) | Inorder traversal with an explicit stack, stopping as soon as the count reaches k | O(h + k) | O(h) |
+| 74 | Trees | [Binary Tree Right Side View](trees/right_side_view.py) | BFS by level; the last node visited in each level is the rightmost one | O(n) | O(w) |
