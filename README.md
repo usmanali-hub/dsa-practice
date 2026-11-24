@@ -90,3 +90,5 @@ pytest
 | 72 | Trees | [Path Sum II](trees/path_sum_ii.py) | DFS with a backtracked running path; a leaf whose remaining target hits zero records a copy of the path | O(n^2) worst case | O(h) |
 | 73 | Trees | [Kth Smallest Element in a BST](trees/kth_smallest_in_bst.py) | Inorder traversal with an explicit stack, stopping as soon as the count reaches k | O(h + k) | O(h) |
 | 74 | Trees | [Binary Tree Right Side View](trees/right_side_view.py) | BFS by level; the last node visited in each level is the rightmost one | O(n) | O(w) |
+| 75 | Graphs | [Number of Islands](graphs/number_of_islands.py) | Iterative flood fill (explicit stack, not recursion) marks each connected land group visited | O(rows * cols) | O(rows * cols) |
+| 76 | Graphs | [Course Schedule](graphs/course_schedule.py) | Kahn's algorithm: BFS topological sort by in-degree; leftover unprocessed nodes mean a cycle | O(V + E) | O(V + E) |
