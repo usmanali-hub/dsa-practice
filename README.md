@@ -92,3 +92,5 @@ pytest
 | 74 | Trees | [Binary Tree Right Side View](trees/right_side_view.py) | BFS by level; the last node visited in each level is the rightmost one | O(n) | O(w) |
 | 75 | Graphs | [Number of Islands](graphs/number_of_islands.py) | Iterative flood fill (explicit stack, not recursion) marks each connected land group visited | O(rows * cols) | O(rows * cols) |
 | 76 | Graphs | [Course Schedule](graphs/course_schedule.py) | Kahn's algorithm: BFS topological sort by in-degree; leftover unprocessed nodes mean a cycle | O(V + E) | O(V + E) |
+| 77 | Graphs | [Clone Graph](graphs/clone_graph.py) | DFS recording each clone before recursing into its neighbors, so a cycle reuses it instead of looping | O(V + E) | O(V) |
+| 78 | Graphs | [Network Delay Time](graphs/network_delay_time.py) | Dijkstra's algorithm with a min-heap; the answer is the largest finalized distance once every reachable node is settled | O(E log V) | O(V + E) |
